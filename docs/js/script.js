@@ -27,24 +27,22 @@ function getRegExp(str) {
   return ret;
 }
 
-setTimeout(() => {
-  fetch('data/butah012/buta012.dic')
-    .then((res) => {
-      return res.text();
-    })
-    .then((str) => {
-      // const wordArr = str.split('\n');
-      // console.log(wordArr.length);
+fetch('data/butah012/buta012.dic')
+  .then((res) => {
+    return res.text();
+  })
+  .then((str) => {
+    // const wordArr = str.split('\n');
+    // console.log(wordArr.length);
 
-      let regExp = getRegExp(decStr);
+    let regExp = getRegExp("1192");
 
-      let result = str.match(regExp);
+    let result = str.match(regExp);
 
-      if(result) {
-        console.log(result);
-      } else {
-        console.log('no match');
-      }
-    })
-  ;
-}, 3000);
+    if(result) {
+      console.log(result);
+    } else {
+      console.log('no match');
+    }
+  })
+;
