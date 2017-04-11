@@ -1,0 +1,7 @@
+.wrapper table {
+  border-collapse: collapse;
+}
+
+.wrapper table td {
+  border: 1px solid #999;
+}

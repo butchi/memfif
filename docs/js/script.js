@@ -1,5 +1,3 @@
-let decStr = '1192';
-
 const assocLi = {
   1: 'あいうえお',
   2: 'かきくけこがぎぐげご',
@@ -13,6 +11,10 @@ const assocLi = {
   0: 'わゐゑをん',
 }
 
+let wrapperElm = document.querySelector('.wrapper');
+
+let resArr = [];
+
 function getRegExp(str) {
   let exp = '';
 
@@ -20,7 +22,7 @@ function getRegExp(str) {
     exp += `[${assocLi[char]}]`;
   })
 
-  console.log(exp);
+  // console.log(exp);
 
   ret = new RegExp(`^${exp}$`, 'gm');
 
@@ -35,14 +37,54 @@ fetch('data/butah012/buta012.dic')
     // const wordArr = str.split('\n');
     // console.log(wordArr.length);
 
-    let regExp = getRegExp("1192");
+    let maxRes = 0;
 
-    let result = str.match(regExp);
+    let noMatchArr = [];
 
-    if(result) {
-      console.log(result);
-    } else {
-      console.log('no match');
+    for(let i = 1000; i <= 2020; i++) {
+      let regExp = getRegExp(i.toString());
+
+      let match = str.match(regExp);
+
+      maxRes = Math.max(maxRes, (match || []).length);
+
+      resArr.push({
+        year: i,
+        result: match,
+      });
     }
+
+    let tableElm = document.createElement('table');
+
+    resArr.forEach((res) => {
+      let trElm = document.createElement('tr');
+
+      trElm.innerHTML = `<th>${res.year}</th>`;
+
+      for(let i = 0; i < 8; i++) {
+        let tdElm = document.createElement('td');
+
+        let word = '';
+
+        if(res.result) {
+          word = res.result[i] || '';
+        }
+
+        tdElm.innerHTML = `<td>${word}<td>`;
+
+        trElm.append(tdElm);
+      }
+
+      if(!res.result) {
+        noMatchArr.push(res.year);
+      }
+
+      tableElm.append(trElm);
+    });
+
+    wrapperElm.append(tableElm);
+
+    console.log(`nomach:`, noMatchArr);
+    console.log(noMatchArr.length);
   })
 ;
